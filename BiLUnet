@@ -231,42 +231,10 @@ class myBiLuNetLumbar(object):
         plt.savefig('train_acc.jpg')
         plt.show()
 
-        
-        
-        print('predict test data')
-        imgs_mask_test = model.predict(imgs_test, batch_size=3, verbose=1)
-        np.save('./results/camvid_mask_test.npy', imgs_mask_test)
-    
-    def save_img(self):
-        print("array to image")
-        imgs = np.load('./results/lumbar_mask_test.npy')
-        piclist = []
-        for line in open("./results/lumbar.txt"):
-            line = line.strip()
-            picname = line.split('/')[-1]
-            piclist.append(picname)
-        for i in range(imgs.shape[0]):
-            path = "./results/" + piclist[i]
-            img = np.zeros((imgs.shape[1], imgs.shape[2], 3), dtype=np.uint8)
-            for k in range(len(img)):
-                for j in range(len(img[k])):  # cv2.imwrite也是BGR顺序
-                    num = np.argmax(imgs[i][k][j])
-                    if num == 0:
-                        img[k][j] = [0, 0, 0] # 0 
-                    elif num == 1:
-                        img[k][j] = [0, 0, 255]   # 1 Vertebra
-                    elif num == 2:
-                        img[k][j] = [0, 255, 0]    # 2 Sacral
-                    elif num == 3:
-                        img[k][j] = [255, 0, 0]    #3   hip
-                    elif num == 4:
-                        img[k][j] = [150, 0, 0]
-            img = cv2.resize(img,(2035, 3408), interpolation=cv2.INTER_CUBIC)
-            print(path)
-            cv2.imwrite(path, img)
+       
             
 if __name__ == '__main__':
     myBiLuNetLumbar = myBiLuNetLumbar()
     model = myBiLuNetLumbar.get_BiLuNetLumbar()    # model.summary()
     myBiLuNetLumbar.train()
-    myBiLuNetLumbar.save_img()
+
