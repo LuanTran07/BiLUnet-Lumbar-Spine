@@ -109,11 +109,7 @@ class myBiLuNetLumbar(object):
             
         inputs = Input((self.img_rows, self.img_cols, 3))     
         
-     
-        vgg_model = applications.VGG16(weights='imagenet', include_top=False, input_tensor=inputs)
-        print([layer.name for layer in vgg_model.layers])
-        layers = dict([(layer.name, layer) for layer in vgg_model.layers])
-        
+    
         SP1 = conv_bn_act(inputs, 32, strides=2)
         SP2 = conv_bn_act(SP1, 64, strides=2)
         SP3 = conv_bn_act(SP2, 156, strides=2) #156
@@ -179,10 +175,7 @@ class myBiLuNetLumbar(object):
         conv10 = Conv2D(5, 1, activation='softmax')(conv9)
         model = Model(input=inputs, output=conv10)
         
-        for layer in model.layers[:19]:
-            print('layer:\n',layer)
-            layer.trainable = True
-        model.load_weights('model/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5', by_name=True)
+
 
         model.compile(optimizer=Adam(lr=1e-4), loss='categorical_crossentropy', metrics=['accuracy']) # loss='sparse_categorical_crossentropy',
         model.summary()
