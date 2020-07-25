@@ -66,10 +66,7 @@ class myBiLunet(object):
             
         inputs = Input((self.img_rows, self.img_cols, 3))     
         
-        # If you want to specify input tensor shape, e.g. 256x256 with 3 channels:
-        vgg_model = applications.VGG16(weights='imagenet', include_top=False, input_tensor=inputs)
-        print([layer.name for layer in vgg_model.layers])
-        layers = dict([(layer.name, layer) for layer in vgg_model.layers])
+
              
         conv1l = Conv2D(32, 3, activation= activation_method, padding='same', kernel_initializer='he_normal')(inputs)
         conv1l = Conv2D(32, 3, activation= activation_method, padding='same', kernel_initializer='he_normal')(conv1l)
@@ -128,10 +125,6 @@ class myBiLunet(object):
         conv10 = Conv2D(5, 1, activation='softmax')(conv9)
         model = Model(input=inputs, output=conv10)
         
-        for layer in model.layers[:19]:
-            print('layer:\n',layer)
-            layer.trainable = True
-        model.load_weights('model/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5', by_name=True)
 
         model.compile(optimizer=Adam(lr=1e-4), loss='categorical_crossentropy', metrics=['acc']) # loss='sparse_categorical_crossentropy',
         model.summary()
