@@ -6,5 +6,5 @@ conda install -c menpo opencv
 pip install imutils 
 
 Data of this project
-We cannot share the patient X-ray images from the request of a hospital.
+Currently, we are not allowed to share the patient's X-ray images without the permission from the hospital.
 
