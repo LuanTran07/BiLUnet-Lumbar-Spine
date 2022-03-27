@@ -1,4 +1,4 @@
-Setup on GPU
+Setup on GPU with BiLuNet 
 
 conda install tensorflow-gpu==1.8 
 conda install -c anaconda keras-gpu 
