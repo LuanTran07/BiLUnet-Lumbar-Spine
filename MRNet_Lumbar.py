@@ -199,7 +199,7 @@ class myMRNet(object):
         model = Model(inputs= inputs, outputs= [out_IVB, out_SSB])
         
         
-        losses = { "number_output": "mse", "seg_output": "categorical_crossentropy"}
+        losses = { "number_output": "mse", "seg_output": "binary_crossentropy"}
         lossWeights = {"number_output": 0.1, "seg_output": 0.9}
         
         opt = tf.keras.optimizers.Adam(learning_rate=1e-4)
